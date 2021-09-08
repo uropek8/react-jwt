@@ -1,0 +1,4 @@
+{
+  "jest.debugMode": true,
+  "jest.showCoverageOnLoad": true
+}

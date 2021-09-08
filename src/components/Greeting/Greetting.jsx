@@ -12,8 +12,6 @@ const Greeting = () => {
     jwtApi.setLoading(false);
   }, []);
 
-  console.log('Greeting');
-
   return (
     <div className="flex items-center flex-col">
       <div className="h-10">
