@@ -7,9 +7,10 @@ const Greeting = () => {
   const { jwtApi } = useContext(Context);
 
   useEffect(() => {
-    jwtApi.setLoading(true);
-    jwtApi.me();
-    jwtApi.setLoading(false);
+    const fetchAuth = async () => {
+      await jwtApi.me();
+    };
+    fetchAuth();
   }, []);
 
   return (

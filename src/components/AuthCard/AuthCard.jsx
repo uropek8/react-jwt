@@ -1,23 +1,22 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
 const AuthCard = ({ type }) => {
-  let history = useHistory();
-
   const { jwtApi } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
 
     if (type === "login") {
-      jwtApi.login({ email, password });
-      history.push('/me');
+      await jwtApi.login({ email, password });
+      window.location = "/";
     } else {
-      jwtApi.register({ email, password });
+      await jwtApi.register({ email, password });
+      window.location = "/login";
     }
   };
 
@@ -63,14 +62,6 @@ const AuthCard = ({ type }) => {
             {type === "login" ? type : "sing up"}
           </button>
         </div>
-        {/* <div className="flex justify-center">
-          <button
-            className="text-white text-base font-semibold uppercase bg-blue-500 py-2 px-5 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-            onClick={() => {history.push("/reto");}}  
-          >
-            click
-          </button>
-        </div> */}
       </form>
     </div>
   );
