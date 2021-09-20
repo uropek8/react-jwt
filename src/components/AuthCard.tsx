@@ -1,22 +1,28 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, FC } from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { Context } from "../..";
+import { Context } from "..";
 
-const AuthCard = ({ type }) => {
-  const { jwtApi } = useContext(Context);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+interface AuthCardProos {
+  type: string;
+}
 
-  const handleSubmitForm = async (e) => {
+const AuthCard: FC<AuthCardProos> = ({ type }) => {
+  const { authApi } = useContext(Context);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (type === "login") {
-      await jwtApi.login({ email, password });
-      window.location = "/";
+      await authApi.login({ email, password });
+      
+      window.location.href = "/";
     } else {
-      await jwtApi.register({ email, password });
-      window.location = "/login";
+      await authApi.register({ email, password });
+      
+      window.location.href = "/login";
     }
   };
 
@@ -30,7 +36,7 @@ const AuthCard = ({ type }) => {
             name="email"
             type="email"
             placeholder="Enter your email"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setEmail(e.target.value);
             }}
             value={email}
@@ -44,7 +50,7 @@ const AuthCard = ({ type }) => {
             name="password"
             type="password"
             placeholder="Enter your password"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setPassword(e.target.value);
             }}
             value={password}

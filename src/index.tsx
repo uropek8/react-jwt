@@ -1,21 +1,23 @@
 import React, { createContext } from "react";
 import ReactDOM from "react-dom";
 import "./styles/index.css";
-import App from "./components/App/App";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-// import Store from "./store/store";
-import JwtApi from "./store/jwt";
-import client from "./helpers/axios/index";
+import Auth from "./store/auth";
+import client from "./helpers/axios";
 
-// const store = new Store();
-const jwtApi = new JwtApi({ client });
+interface IAuth {
+  authApi: Auth;
+}
 
-export const Context = createContext({
-  jwtApi,
+const authApi = new Auth(client);
+
+export const Context = createContext<IAuth>({
+  authApi,
 });
 
 ReactDOM.render(
-  <Context.Provider value={{ jwtApi }}>
+  <Context.Provider value={{ authApi }}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
 const API_URL = "http://142.93.134.108:1111";
 
-const client = axios.create({
+const client: AxiosInstance = axios.create({
   withCredentials: true,
   baseURL: API_URL,
 });

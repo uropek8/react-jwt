@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import AuthCard from "../AuthCard/AuthCard";
-import Greeting from "../Greeting/Greetting";
+import AuthCard from "./AuthCard";
+import Greeting from "./Greetting";
 
-function App() {
+const App: FC = () => {
   return (
     <Router>
       <main className="min-h-screen flex flex-col items-center justify-center bg-blue-100">
@@ -25,6 +25,6 @@ function App() {
       </main>
     </Router>
   );
-}
+};
 
 export default observer(App);
