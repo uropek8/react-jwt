@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { observer } from "mobx-react-lite";
 import AuthCard from "./AuthCard";
 import Greeting from "./Greetting";
 
@@ -12,19 +11,21 @@ const App: FC = () => {
           <Route path="/" exact>
             <Redirect to="/me" />
           </Route>
-          <Route path="/signup">
-            <AuthCard type="signup" />
-          </Route>
-          <Route path="/login">
-            <AuthCard type="login" />
-          </Route>
-          <Route path="/me">
-            {localStorage.getItem("access_token") ? <Greeting /> : <Redirect to="/login" />}
-          </Route>
+          <Route
+            path="/signup"
+            exact
+            render={({ history }) => <AuthCard type="signup" history={history} />}
+          ></Route>
+          <Route
+            path="/login"
+            exact
+            render={({ history }) => <AuthCard type="login" history={history} />}
+          ></Route>
+          <Route path="/me" exact render={({ history }) => <Greeting history={history} />}></Route>
         </Switch>
       </main>
     </Router>
   );
 };
 
-export default observer(App);
+export default App;

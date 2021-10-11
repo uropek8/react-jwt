@@ -1,27 +1,17 @@
-import React, { createContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import "./styles/index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-import Auth from "./store/auth";
-import client from "./helpers/axios";
-
-interface IAuth {
-  authApi: Auth;
-}
-
-const authApi = new Auth(client);
-
-export const Context = createContext<IAuth>({
-  authApi,
-});
+import store from "./store/index";
 
 ReactDOM.render(
-  <Context.Provider value={{ authApi }}>
+  <Provider store={store}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </Context.Provider>,
+  </Provider>,
   document.getElementById("root")
 );
 

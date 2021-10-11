@@ -1,30 +1,37 @@
-import React, { useState, useContext, FC } from "react";
+import React, { useState, FC } from "react";
 import { Link } from "react-router-dom";
-import { observer } from "mobx-react-lite";
-import { Context } from "..";
+import { History } from "history";
+import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useActions } from "../hooks/useActions";
 
-interface AuthCardProos {
+interface AuthCardProps {
   type: string;
+  history: History;
 }
 
-const AuthCard: FC<AuthCardProos> = ({ type }) => {
-  const { authApi } = useContext(Context);
+const AuthCard: FC<AuthCardProps> = ({ history, type }) => {
+  const { accessToken } = useTypedSelector((state) => state.user);
+  const { loginAction, registerAction } = useActions();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleSubmitForm = async (e: React.FormEvent) => {
+  const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (type === "login") {
-      await authApi.login({ email, password });
+      loginAction(email, password);
       
-      window.location.href = "/";
+      if (accessToken) {
+        history.push("/me");
+      }
     } else {
-      await authApi.register({ email, password });
-      
-      window.location.href = "/login";
+      registerAction(email, password);
+      history.push("/login");
     }
   };
+
+  if (localStorage.getItem("access_token") && localStorage.getItem("refresh_token"))
+    history.push("/me");
 
   return (
     <div className="max-w-sm w-full flex bg-white rounded-lg p-8 shadow-sm">
@@ -73,4 +80,4 @@ const AuthCard: FC<AuthCardProos> = ({ type }) => {
   );
 };
 
-export default observer(AuthCard);
+export default AuthCard;

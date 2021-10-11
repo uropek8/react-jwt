@@ -1,6 +1,6 @@
-import Auth from "./auth";
 import axios, { AxiosInstance } from "axios";
 import MockAdapter from "axios-mock-adapter";
+import Auth from "./auth";
 
 let client: AxiosInstance, mock: MockAdapter, api: Auth;
 
